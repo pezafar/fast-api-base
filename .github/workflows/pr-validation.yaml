@@ -31,5 +31,5 @@ jobs:
       - name: Lint and Format Check
         run: |
           make lint-ruff
-          make lint-type
+          make lint-types
           make lint-format
