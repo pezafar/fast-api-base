@@ -38,7 +38,8 @@ help: ## Show this help message
 
 install: ## Install production dependencies
 	@printf "$(GREEN)Installing production dependencies...$(NC)\n"
-	@uv sync --no-dev
+	@uv sync --no-dev --frozen
+
 
 install-dev: setup-env ## Install all dependencies including development tools
 	@printf "$(GREEN)Installing all dependencies...$(NC)\n"
@@ -125,7 +126,7 @@ docker-build: ## Build Docker image
 	@printf "$(GREEN)Building Docker image...$(NC)\n"
 	@docker build -t $(PROJECT_NAME) .
 
-docker-run: docker-build ## Run application in Docker
+docker-run: 
 	@printf "$(GREEN)Running Docker container...$(NC)\n"
 	@docker run -p $(PORT):$(PORT) --env-file .env $(PROJECT_NAME)
 

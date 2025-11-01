@@ -1,130 +1,126 @@
 # FastAPI Template
-
-A clean and modern FastAPI template project with authentication, logging, database support, and Docker configuration.
-
-## Features
-
-- 🚀 FastAPI with modern Python features
-- 🔐 JWT Authentication (Bearer token)
-- 📝 Structured logging with Loguru
-- 🗄️ SQLAlchemy database integration
-- 🐳 Docker and Docker Compose support
-- 🧪 Testing with pytest
-- 📋 Code formatting and linting
-- 🔧 Configuration management with environment variables
+Fast api simple template.
+Package management with uv, code quality with ruff and pyright.
+Based on [cookiecutter-fastapi repo](https://github.com/arthurhenrique/cookiecutter-fastapi)
 
 ## Development Requirements
 
 - Python 3.9+
-- UV (Python Package Manager)
+- [UV](https://docs.astral.sh/uv/) (Python Package Manager)
 
-## Installation
+## Quick Start
 
 ```sh
-make install
+# Get help with all available commands
+make help
+
+# Install development dependencies
+make install-dev
+
+# Run the development server
+make run
+
+# Run tests
+make test
+
+# Check code quality
+make check
 ```
 
-## Running Localhost
+## 📋 Available Commands
 
-`make run`
+Run `make help` to see all project commands.
 
-## Deploy app
+## Development Workflow
 
-`make deploy`
+1. **Initial Setup**:
+   ```sh
+   make install-dev
+   make setup-hooks  # Optional: setup git hooks
+   ```
 
-## Running Tests
+2. **Daily Development**:
+   ```sh
+   make run          # Start development server
+   make test-watch   # Run tests in another terminal
+   ```
 
-`make test`
+3. **Before Committing**:
+   ```sh
+   make pre-commit   # Format code and run all checks
+   ```
 
-## Access Swagger Documentation
+4. **Update Dependencies**:
+   ```sh
+   make update-deps  # Update all dependencies
+   make sync         # Sync with updated lockfile
+   ```
 
-> <http://localhost:8080/docs>
+## Access Documentation
 
-## Access Redocs Documentation
+- **Swagger UI**: <http://localhost:8080/docs>
+- **ReDoc**: <http://localhost:8080/redoc>
 
-> <http://localhost:8080/redoc>
-
-## Project structure
+## Project Structure
 
 Files related to application are in the `app` or `tests` directories.
-Application parts are:
 
-    app
-    |
-    | # Fast-API stuff
-    ├── api                 - web related stuff.
-    │   └── routes          - web routes.
-    ├── core                - application configuration, startup events, logging.
-    ├── models              - pydantic models for this application.
-    ├── services            - logic that is not just crud related.
-    ├── main-aws-lambda.py  - [Optional] FastAPI application for AWS Lambda creation and configuration.
-    └── main.py             - FastAPI application creation and configuration.
-    |
-    | # ML stuff
-    ├── data             - where you persist data locally
-    │   ├── interim      - intermediate data that has been transformed.
-    │   ├── processed    - the final, canonical data sets for modeling.
-    │   └── raw          - the original, immutable data dump.
-    │
-    ├── notebooks        - Jupyter notebooks. Naming convention is a number (for ordering),
-    |
-    ├── ml               - modelling source code for use in this project.
-    │   ├── __init__.py  - makes ml a Python module
-    │   ├── pipeline.py  - scripts to orchestrate the whole pipeline
-    │   │
-    │   ├── data         - scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features     - scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   └── model        - scripts to train models and make predictions
-    │       ├── predict_model.py
-    │       └── train_model.py
-    │
-    └── tests            - pytest
+```
+app/
+├── api/                 # Web related stuff
+│   └── routes/          # API routes and endpoints
+├── core/                # Application configuration, startup events, logging
+├── models/              # Pydantic models for this application
+├── services/            # Business logic and service layer
+└── __main__.py          # FastAPI application creation and configuration
 
-## GCP
+tests/                   # Test files using pytest
+├── test_api_*.py        # API endpoint tests
+├── test_*_service.py    # Service layer tests
+└── test_*.py            # Other unit tests
 
-Deploying inference service to Cloud Run
+# Configuration files
+├── pyproject.toml       # Project dependencies and configuration
+├── uv.lock              # Locked dependency versions
+├── Makefile             # Development commands
+├── Dockerfile           # Docker container configuration
+├── docker-compose.yml   # Multi-service Docker setup
+└── .env.example         # Environment variables template
+```
 
-### Authenticate
+## Configuration
 
-1. Install `gcloud` cli
-2. `gcloud auth login`
-3. `gcloud config set project <PROJECT_ID>`
+The application uses environment variables for configuration. Copy `.env.example` to `.env` and modify as needed:
 
-### Enable APIs
+```sh
+cp .env.example .env
+```
 
-1. Cloud Run API
-2. Cloud Build API
-3. IAM API
+Key environment variables:
+- `DEBUG`: Enable debug mode (default: false)
+- `PROJECT_NAME`: Application name
+- `DATABASE_URL`: Database connection string
+- `SECRET_KEY`: Secret key for authentication
 
-### Deploy to Cloud Run
+## Authentication
 
-1. Run `gcp-deploy.sh`
+The template includes a simple Bearer token authentication system. In production, replace this with a proper JWT implementation or OAuth2.
 
-### Clean up
+Default token for development: `123`
 
-1. Delete Cloud Run
-2. Delete Docker image in GCR
+Example API call:
+```sh
+curl -H "Authorization: Bearer 123" http://localhost:8080/api/v1/items
+```
 
-## AWS
+## Contributing
 
-Deploying inference service to AWS Lambda
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes
+4. Run quality checks: `make pre-commit`
+5. Commit your changes: `git commit -m "Description"`
+6. Push to the branch: `git push origin feature-name`
+7. Submit a pull request
 
-### Authenticate
 
-1. Install `awscli` and `sam-cli`
-2. `aws configure`
-
-### Deploy to Lambda
-
-1. Run `sam build`
-2. Run `sam deploy --guiChange this portion for other types of models
-
-## Add the correct type hinting when completed
-
-`aws cloudformation delete-stack --stack-name <STACK_NAME_ON_CREATION>`
-
-Made by <https://github.com/arthurhenrique/cookiecutter-fastapi/graphs/contributors> with ❤️
