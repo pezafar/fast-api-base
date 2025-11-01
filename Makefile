@@ -93,19 +93,28 @@ test-cov:
 ##@ 🔍 Code Quality
 # =============================================================================
 
-lint: 
-	@printf "$(GREEN)Running linting tools...$(NC)\n"
-	@printf "$(BLUE)Running ruff check...$(NC)\n"
+lint-ruff: ## Run ruff check
+	@printf "$(GREEN)Running ruff check...$(NC)\n"
 	@uv run ruff check .
-	@printf "$(BLUE)Running ruff format check...$(NC)\n"
-	@uv run ruff format --check .
-	@printf "$(BLUE)Running pyright...$(NC)\n"
+
+lint-format: ## Check code format with ruff
+	@printf "$(GREEN)Running ruff format check...$(NC)\n"
+	@uv run ruff format --check app
+
+lint-types: ## Run type checking with pyright
+	@printf "$(GREEN)Running pyright type checking...$(NC)\n"
 	@uv run pyright
 
-format: 
+lint: lint-ruff lint-format lint-types ## Run all linting tools
+	@printf "$(GREEN)✅ All linting checks completed!$(NC)\n"
+
+format: ## Format code with ruff
 	@printf "$(GREEN)Formatting code...$(NC)\n"
 	@uv run ruff format .
-	@uv run ruff check . --fix
+
+format-check: 
+	@printf "$(GREEN)Checking code format...$(NC)\n"
+	@uv run ruff format --check app
 
 check: lint test ## Run all checks (lint + test)
 
