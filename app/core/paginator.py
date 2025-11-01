@@ -1,14 +1,14 @@
-from typing import List, TypeVar, Dict, Any
+from typing import Any, TypeVar
 
 T = TypeVar("T")
 
 
 def pagenation(
-    data: List[T],
+    data: list[T],
     page_number=1,
     page_size=20,
     start_page_as_1=True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Return payload that contains metainformations about
     pagination and listing data.
     page_number starts with 0 (array like),

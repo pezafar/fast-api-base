@@ -1,8 +1,9 @@
+import uvicorn
+from fastapi import FastAPI
+
 from app.api.routes.api import router as api_router
 from app.core.config import API_PREFIX, DEBUG, PROJECT_NAME, VERSION
 from app.core.events import create_start_app_handler
-from fastapi import FastAPI
-import uvicorn
 
 
 def get_application() -> FastAPI:

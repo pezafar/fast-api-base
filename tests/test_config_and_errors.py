@@ -2,12 +2,12 @@ import logging
 
 import pytest
 
-from core import config, errors
+from app.core import config, errors
 
 
 def test_config_defaults():
     assert config.API_PREFIX == "/api"
-    assert config.PROJECT_NAME == "funnelizer"
+    assert config.PROJECT_NAME == "FastAPI Template"
     assert config.LOGGING_LEVEL in (logging.INFO, logging.DEBUG)
 
 

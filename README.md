@@ -1,32 +1,30 @@
-# funnelizer
+# FastAPI Template
 
-A short description of the project
+A clean and modern FastAPI template project with authentication, logging, database support, and Docker configuration.
+
+## Features
+
+- 🚀 FastAPI with modern Python features
+- 🔐 JWT Authentication (Bearer token)
+- 📝 Structured logging with Loguru
+- 🗄️ SQLAlchemy database integration
+- 🐳 Docker and Docker Compose support
+- 🧪 Testing with pytest
+- 📋 Code formatting and linting
+- 🔧 Configuration management with environment variables
 
 ## Development Requirements
 
-- Python 3.11+
-- Uv (Python Package Manager)
-
-### M.L Model Environment
-
-```sh
-MODEL_PATH=./ml/model/
-MODEL_NAME=model.pkl
-```
-
-### Update `/predict`
-
-To update your machine learning model, add your `load` and `method` [change here](app/api/routes/predictor.py#L19) at `predictor.py`
+- Python 3.9+
+- UV (Python Package Manager)
 
 ## Installation
 
 ```sh
-python -m venv venv
-source venv/bin/activate
 make install
 ```
 
-## Runnning Localhost
+## Running Localhost
 
 `make run`
 
